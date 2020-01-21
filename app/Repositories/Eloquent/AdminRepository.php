@@ -62,6 +62,20 @@ class AdminRepository implements AdminInterFace
 
         return api_response(config('responseCode.201'), 201);
     }
+
+    public function updateField($data){
+        if($this->admin->where('id',$data['id'])->update($data)){
+            return api_response(config('responseCode.200'), 200);
+        };
+
+        return api_response(config('responseCode.201'), 201);
+    }
+
+    public function updatePassword(){
+        $data = request()->only('id','password');
+        $data['password'] = bcrypt($data['password']);
+        return $this->updateField($data);
+    }
 }
 
 

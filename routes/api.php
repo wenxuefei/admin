@@ -19,12 +19,13 @@ $api->version('v1', function ($api) {
     $api->group(["namespace" => "App\Http\Controllers\Api\Admin", 'middleware' => ['signature']], function ($api) {
 
         $api->post('/login', 'LoginController@login')->name('login');
-        $api->post('/upload', 'HomeController@upload');
         $api->group(['middleware' => ['auth:admins']], function ($api) {
             $api->post('/userInfo', 'HomeController@getUserInfo');
             $api->post('/getUserList', 'PermissionController@userList');
             $api->post('/addUser', 'PermissionController@addUser');
-
+            $api->post('/upload', 'HomeController@upload');
+            $api->post('/editStatus', 'PermissionController@editStatus');
+            $api->post('/rePassword', 'PermissionController@rePassword'); // 重置密码
         });
 
     });
